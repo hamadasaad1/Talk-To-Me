@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "343004126527",
+    "firebase_url": "https://talk-to-me-a7b33.firebaseio.com",
+    "project_id": "talk-to-me-a7b33",
+    "storage_bucket": "talk-to-me-a7b33.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343004126527:android:5b82342167383d50",
+        "android_client_info": {
+          "package_name": "com.hamada.android.talktome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343004126527-qjcbgfjd1aquguacva6se69po2bb1433.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hamada.android.talktome",
+            "certificate_hash": "b2f65d1feb14dd4b14070cc4b41761f74b1aeba2"
+          }
+        },
+        {
+          "client_id": "343004126527-qukq7opon7ov6pgj9l6omdk798u3do6a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDduty9ZuqxlLrzVEA8KA4M6dMofzwFN8s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343004126527-qukq7opon7ov6pgj9l6omdk798u3do6a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

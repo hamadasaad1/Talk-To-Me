@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradl_bgr"
+    tools:context=".ProfilesActivity"
+    tools:layout_editor_absoluteY="25dp">
+
+    <ImageView
+        android:id="@+id/profile_image_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_profile_activity_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:padding="5dp"
+        android:text="user_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_activity" />
+
+    <TextView
+        android:id="@+id/tv_profile_activity_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="12dp"
+        android:padding="5dp"
+        android:text="user_state"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_profile_activity_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profile_activity_name" />
+
+    <Button
+        android:id="@+id/bt_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="31dp"
+        android:background="@drawable/but_bg"
+        android:fontFamily="sans-serif-medium"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="send friend Request"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/bt_decline"
+        app:layout_constraintStart_toStartOf="@+id/bt_decline" />
+
+    <Button
+        android:id="@+id/bt_decline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/but_bg"
+        android:fontFamily="sans-serif-medium"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="Decline Friend Request"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
