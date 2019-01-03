@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -80,19 +82,36 @@ public class SettingActivity extends AppCompatActivity {
         mThumRef=FirebaseStorage.getInstance().getReference().child("thumb_images");
         mDatabaseReference=FirebaseDatabase.getInstance()
                 .getReference().child("users").child(online_user_Id);
-
+         mDatabaseReference.keepSynced(true);
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String mNameUser=dataSnapshot.child("user_name").getValue().toString();
                 String mStateUser=dataSnapshot.child("user_state").getValue().toString();
                 String mImageUser=dataSnapshot.child("user_image").getValue().toString();
-                String mThumbUser=dataSnapshot.child("user_thumb_image").getValue().toString();
+                final String mThumbUser=dataSnapshot.child("user_thumb_image").getValue().toString();
                 mTvChangeName.setText(mNameUser);
                 mTvChangeState.setText(mStateUser);
                 if (!mImageUser.equals("profile")) {
-                    Picasso.get().load(mThumbUser).placeholder(R.drawable.profile)
+//                    Picasso.get().load(mThumbUser).placeholder(R.drawable.profile)
+//                            .into(mImageView);
+
+                    Picasso.get().load(mThumbUser).networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.profile)
+                            .into(mImageView, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+
+                                    Picasso.get().load(mThumbUser).placeholder(R.drawable.profile)
                             .into(mImageView);
+                                }
+                            });
+
                 }
 
             }

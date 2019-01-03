@@ -2,9 +2,12 @@ package com.hamada.android.talktome;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.hamada.android.talktome.Network.CheckNetwork;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,10 +63,33 @@ public class RegisterActivity extends AppCompatActivity {
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                final String name=mNameRegister.getText().toString();
                 String email=mEmailRegister.getText().toString();
                 String password=mPasswordRegister.getText().toString();
-                registerAccount(name,email,password);
+                 //check internet connected or not
+                if (CheckNetwork.isInternetAvailable(RegisterActivity.this)) {
+                    registerAccount(name,email,password);
+
+                } else {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setIcon(R.drawable.ofline);
+                    builder.setTitle(R.string.dialog_titile_internet);
+                    builder.setMessage(R.string.dialog_message_internet);
+                    builder.setPositiveButton(R.string.dialog_action_internet,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                                    startActivity(intent);
+
+                                }
+                            });
+                    builder.show();
+
+                }
+
 
             }
         });

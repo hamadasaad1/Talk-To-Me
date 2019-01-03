@@ -57,5 +57,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:4.2.1'
     //compressor image
     implementation 'id.zelory:compressor:2.1.0'
+    //for offline
+    compile 'com.squareup.okhttp3:okhttp:3.12.1'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,16 +1,21 @@
-package com.hamada.android.talktome;
+package com.hamada.android.talktome.Model;
 
-public class AllUserContacts {
+public class Users {
 
     public String user_name,user_image,user_thumb_image;
 
-    public AllUserContacts() {
+    public Users() {
     }
 
-    public AllUserContacts(String user_name, String user_image,String user_thumb_image) {
+    public Users(String user_name, String user_image, String user_thumb_image) {
         this.user_name = user_name;
         this.user_image = user_image;
         this.user_thumb_image=user_thumb_image;
+    }
+
+    public Users(String user_name, String user_image) {
+        this.user_name = user_name;
+        this.user_image = user_image;
     }
 
     public String getUser_name() {

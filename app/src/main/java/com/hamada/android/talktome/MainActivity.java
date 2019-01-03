@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                  startActivity(new Intent(this,SettingActivity.class));
                 return true;
             case R.id.Action_AllUser:
-                startActivity(new Intent(this,UsersActivity.class));
+                startActivity(new Intent(this,DisplayActivity.class));
                 return true;
             case R.id.Action_Logout:
                 //this to logout for account

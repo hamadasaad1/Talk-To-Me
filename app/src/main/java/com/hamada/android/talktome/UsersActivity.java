@@ -15,8 +15,14 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.hamada.android.talktome.Model.Users;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -29,9 +35,9 @@ public class UsersActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private DatabaseReference mReference;
-    public String USER_ID="user_id";
+    public static String USER_ID="user_id";
     private RecyclerView.LayoutManager mLayoutManager;
-    private FirebaseRecyclerAdapter<AllUserContacts,AllUserViewHolder> adapter;
+    private FirebaseRecyclerAdapter<Users,AllUserViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,9 @@ public class UsersActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mReference=FirebaseDatabase.getInstance().getReference().child("users");
+         mReference.keepSynced(true);
+
+
 
         setupRecyclerView();
 
@@ -69,21 +78,60 @@ public class UsersActivity extends AppCompatActivity {
 
     private void setupRecyclerView(){
 
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("users")
+                .limitToLast(50);
 
-        FirebaseRecyclerOptions<AllUserContacts> options =
-                new FirebaseRecyclerOptions.Builder<AllUserContacts>()
-                        .setQuery(mReference, AllUserContacts.class)
+
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
+                // ...
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
+                // ...
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                // ...
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // ...
+            }
+        };
+        query.addChildEventListener(childEventListener);
+
+
+
+
+        FirebaseRecyclerOptions<Users> options =
+                new FirebaseRecyclerOptions.Builder<Users>()
+                        .setQuery(query, Users.class)
                         .build();
 
 
 
-        adapter=new FirebaseRecyclerAdapter<AllUserContacts, AllUserViewHolder>(options) {
+        adapter=new FirebaseRecyclerAdapter<Users, AllUserViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull AllUserViewHolder holder, final int position, @NonNull final AllUserContacts model) {
+                    protected void onBindViewHolder(@NonNull AllUserViewHolder holder,
+                            final int position, @NonNull final Users model) {
 
                         holder.mTVNameAlluser.setText(model.getUser_name());
 
-                        Picasso.get().load(model.getUser_thumb_image()).placeholder(R.drawable.profile)
+                        Picasso.get().load(model.getUser_thumb_image())
+                                .networkPolicy(NetworkPolicy.OFFLINE)
+                                .placeholder(R.drawable.profile)
                                 .into(holder.mcircleImageView);
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override

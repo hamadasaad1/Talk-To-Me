@@ -1,9 +1,13 @@
 package com.hamada.android.talktome;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.hamada.android.talktome.Network.CheckNetwork;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +61,28 @@ public class LoginActivity extends AppCompatActivity {
 
         String email=mUserName.getText().toString();
         String password=mPassword.getText().toString();
-        loginAccount(email,password);
+
+
+        if (CheckNetwork.isInternetAvailable(this)) {
+            loginAccount(email,password);
+
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setIcon(R.drawable.ofline);
+            builder.setTitle(R.string.dialog_titile_internet);
+            builder.setMessage(R.string.dialog_message_internet);
+            builder.setPositiveButton(R.string.dialog_action_internet,
+                    new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                    startActivity(intent);
+
+                }
+            });
+            builder.show();
+
+        }
 
     }
 
