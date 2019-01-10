@@ -12,6 +12,9 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.hamada.android.talktome.Adapter.ViewsPagerAdapter;
 
 import butterknife.BindView;
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     private ViewsPagerAdapter mPagerAdapter;
 
+    private DatabaseReference mReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         mPagerAdapter=new ViewsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mReference=FirebaseDatabase.getInstance().getReference()
+                .child("users").child(mAuthFirebase.getCurrentUser().getUid());
 
     }
 
@@ -50,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
         //to check the user is register or not
         checkLogin();
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+            mReference.child("online").setValue(ServerValue.TIMESTAMP);
+
+
+    }
     //check for user is register or null
     private void checkLogin(){
         FirebaseUser user=mAuthFirebase.getCurrentUser();
@@ -58,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
+        }else {
+
+            mReference.child("online").setValue("true");
         }
     }
 
@@ -77,9 +96,10 @@ public class MainActivity extends AppCompatActivity {
                  startActivity(new Intent(this,SettingActivity.class));
                 return true;
             case R.id.Action_AllUser:
-                startActivity(new Intent(this,DisplayActivity.class));
+                startActivity(new Intent(this,UsersActivity.class));
                 return true;
             case R.id.Action_Logout:
+                mReference.child("online").setValue(ServerValue.TIMESTAMP);
                 //this to logout for account
                 mAuthFirebase.signOut();
                 //call this method to check for user and go out

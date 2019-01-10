@@ -8,11 +8,22 @@
     tools:context=".ProfilesActivity"
     tools:layout_editor_absoluteY="25dp">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/profile_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <ImageView
         android:id="@+id/profile_image_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,23 +35,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="23dp"
         android:padding="5dp"
-        tools:text="user_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image_activity" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_image_activity"
+        tools:text="user_name" />
 
     <TextView
         android:id="@+id/tv_profile_activity_state"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginTop="12dp"
         android:padding="5dp"
-        tools:text="user_state"
         android:textSize="18sp"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="@+id/tv_profile_activity_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_profile_activity_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_profile_activity_name"
+        tools:text="user_state" />
 
     <Button
         android:id="@+id/bt_request"

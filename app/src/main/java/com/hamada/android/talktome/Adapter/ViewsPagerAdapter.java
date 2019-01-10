@@ -20,13 +20,15 @@ public class ViewsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment=null;
         switch (position){
             case 0:
-                fragment=new RequestsFragment();
-                break;
-            case 1:
                 fragment=new FrindsFragment();
                 break;
-            case 2:
+            case 1:
+
                 fragment=new ChatFragment();
+                break;
+            case 2:
+
+                fragment=new RequestsFragment();
                 break;
                 default:
                     return null;
@@ -45,13 +47,13 @@ public class ViewsPagerAdapter extends FragmentPagerAdapter {
         String title=null;
         switch (position){
             case 0:
-                title="Requests";
-                break;
-            case 1:
                 title="Friends";
                 break;
-            case 2:
+            case 1:
                 title="Chat";
+                break;
+            case 2:
+                title="Requests";
                 break;
           default:
               return null;

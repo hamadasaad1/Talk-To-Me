@@ -26,6 +26,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.hamada.android.talktome.Model.Users;
 import com.hamada.android.talktome.Network.CheckNetwork;
 
 import butterknife.BindView;
@@ -120,11 +122,14 @@ public class RegisterActivity extends AppCompatActivity {
 
                             if (task.isSuccessful()){
                                 String user_Id=mFirebaseAuth.getCurrentUser().getUid();
+
+                                String deviceToken=FirebaseInstanceId.getInstance().getToken();
                               mDatabaseReference=FirebaseDatabase.getInstance()
                                       .getReference().child("users").child(user_Id);
                               mDatabaseReference.child("user_name").setValue(name);
                               mDatabaseReference.child("user_state").setValue("Hello Every one");
                               mDatabaseReference.child("user_image").setValue("profile");
+                              mDatabaseReference.child("device_token").setValue(deviceToken);
                               mDatabaseReference.child("user_thumb_image").setValue("image")
                                       .addOnCompleteListener(new OnCompleteListener<Void>() {
                                           @Override

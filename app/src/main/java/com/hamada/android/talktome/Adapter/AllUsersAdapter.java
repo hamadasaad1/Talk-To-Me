@@ -1,8 +1,10 @@
 package com.hamada.android.talktome.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hamada.android.talktome.Model.Users;
+import com.hamada.android.talktome.ProfilesActivity;
 import com.hamada.android.talktome.R;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +42,7 @@ public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllUsersAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AllUsersAdapter.ViewHolder holder, final int position) {
 
 
         holder.name.setText(list.get(position).user_name);
@@ -50,6 +53,11 @@ public class AllUsersAdapter extends RecyclerView.Adapter<AllUsersAdapter.ViewHo
             @Override
             public void onClick(View v) {
 
+               // String userId=list.get(position).getFirebaseId();
+               // Log.d("TAG",userId);
+                Intent intent=new Intent(context,ProfilesActivity.class);
+               // intent.putExtra("userid",userId);
+                context.startActivity(intent);
             }
         });
 

@@ -48,8 +48,13 @@
             android:name=".UsersActivity"
             android:label="Users"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ProfilesActivity" />
-        <activity android:name=".DisplayActivity"></activity>
+        <activity
+            android:name=".ProfilesActivity"
+            android:label="Profile"
+            android:parentActivityName=".UsersActivity" />
+        <activity android:name=".DisplayActivity" />
+        <activity android:name=".MessagesActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

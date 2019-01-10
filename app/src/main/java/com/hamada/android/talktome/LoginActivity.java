@@ -18,9 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.hamada.android.talktome.Network.CheckNetwork;
 
 import butterknife.BindView;
@@ -40,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     /** Duration of wait **/
     private final int SPLASH_DISPLAY_LENGTH = 3000;
+    private DatabaseReference mDatabaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         mFirebaseAuth=FirebaseAuth.getInstance();
         dialog=new ProgressDialog(this);
+        mDatabaseReference=FirebaseDatabase.getInstance().getReference().child("users");
     }
 
     public void Login(View view) {
@@ -120,10 +126,24 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (task.isSuccessful()){
-                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
+                                //get user id
+                                String onlin_Id=mFirebaseAuth.getCurrentUser().getUid();
+                                //get node
+                                String deviceToken=FirebaseInstanceId.getInstance().getToken();
+                                //store device token
+                                mDatabaseReference.child(onlin_Id).child("device_token").setValue(deviceToken)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+
+                                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
+
                             }else {
                                 Toast.makeText(LoginActivity.this, "Please check for Email or Password"
                                         , Toast.LENGTH_SHORT).show();

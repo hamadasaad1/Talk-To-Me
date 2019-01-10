@@ -93,8 +93,6 @@ public class SettingActivity extends AppCompatActivity {
                 mTvChangeName.setText(mNameUser);
                 mTvChangeState.setText(mStateUser);
                 if (!mImageUser.equals("profile")) {
-//                    Picasso.get().load(mThumbUser).placeholder(R.drawable.profile)
-//                            .into(mImageView);
 
                     Picasso.get().load(mThumbUser).networkPolicy(NetworkPolicy.OFFLINE)
                             .placeholder(R.drawable.profile)
@@ -124,11 +122,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     public void changeProfileImage(View view) {
-//        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//        photoPickerIntent.setType("image/*");
-//
-//        startActivityForResult(photoPickerIntent, GALLERY_REQUEST);
-// start picker to get image for cropping and then use the image in cropping activity
+
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1,1)

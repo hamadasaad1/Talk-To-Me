@@ -5,46 +5,67 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_marginBottom="5dp"
-    android:padding="5dp"
-    >
-<android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:id="@+id/card_view"
-    android:layout_gravity="center"
-    card_view:cardCornerRadius="4dp"
-
-    android:elevation="4dp"
 
     >
-    <LinearLayout
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:elevation="4dp"
+
+        card_view:cardCornerRadius="4dp"
+
         >
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_all_user"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/profile"
-            />
 
-        <TextView
-            android:id="@+id/tv_all_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Hamada saad"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        </TextView>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_all_user"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile" />
 
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_all_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="20dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    tools:text="Hamada saad" />
+
+                <TextView
+                    android:id="@+id/tv_all_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="16sp"
+                    tools:text="state" />
+            </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/image_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="invisible"
+                    android:src="@drawable/online_icon" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

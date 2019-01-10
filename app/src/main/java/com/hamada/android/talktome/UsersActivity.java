@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.hamada.android.talktome.Model.Users;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -71,8 +72,8 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStop() {
+        super.onStop();
         adapter.stopListening();
     }
 
@@ -124,15 +125,28 @@ public class UsersActivity extends AppCompatActivity {
 
         adapter=new FirebaseRecyclerAdapter<Users, AllUserViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull AllUserViewHolder holder,
+                    protected void onBindViewHolder(@NonNull final AllUserViewHolder holder,
                             final int position, @NonNull final Users model) {
 
                         holder.mTVNameAlluser.setText(model.getUser_name());
-
+                        holder.mStateTV.setText(model.getUser_state());
                         Picasso.get().load(model.getUser_thumb_image())
                                 .networkPolicy(NetworkPolicy.OFFLINE)
                                 .placeholder(R.drawable.profile)
-                                .into(holder.mcircleImageView);
+                                .into(holder.mcircleImageView, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Exception e) {
+                                        Picasso.get().load(model.getUser_thumb_image())
+                                                .placeholder(R.drawable.profile)
+                                                .into(holder.mcircleImageView);
+
+                                    }
+                                });
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -162,6 +176,8 @@ public class UsersActivity extends AppCompatActivity {
 
         @BindView(R.id.tv_all_user)
         TextView mTVNameAlluser;
+        @BindView(R.id.tv_all_state)
+        TextView mStateTV;
         CircleImageView mcircleImageView;
         public AllUserViewHolder(View itemView) {
             super(itemView);

@@ -59,5 +59,6 @@ dependencies {
     implementation 'id.zelory:compressor:2.1.0'
     //for offline
     compile 'com.squareup.okhttp3:okhttp:3.12.1'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 }
 apply plugin: 'com.google.gms.google-services'
