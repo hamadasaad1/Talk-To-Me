@@ -43,11 +43,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         // Show the Up button in the action bar and set recipes name as title.
 
+        if (mAuthFirebase.getCurrentUser() !=null){
+            mReference=FirebaseDatabase.getInstance().getReference()
+                    .child("users").child(mAuthFirebase.getCurrentUser().getUid());
+        }
         mPagerAdapter=new ViewsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mReference=FirebaseDatabase.getInstance().getReference()
-                .child("users").child(mAuthFirebase.getCurrentUser().getUid());
+
+
 
     }
 
@@ -61,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        FirebaseUser user=mAuthFirebase.getCurrentUser();
 
+        if (user !=null) {
             mReference.child("online").setValue(ServerValue.TIMESTAMP);
-
+        }
 
     }
     //check for user is register or null

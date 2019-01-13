@@ -140,7 +140,7 @@ public class ProfilesActivity extends AppCompatActivity {
                                             if (task.isSuccessful()){
                                                 mReduestButton.setEnabled(true);
                                                 mCurrentState="not_friends";
-                                                mReduestButton.setText("Send Friend Request");
+                                                mReduestButton.setText(R.string.send_request);
 
                                             }
                                         }
@@ -181,7 +181,7 @@ public class ProfilesActivity extends AppCompatActivity {
                                                                     if (task.isSuccessful()){
                                                                         mReduestButton.setEnabled(true);
                                                                         mCurrentState="friends";
-                                                                        mReduestButton.setText("UnFriend");
+                                                                        mReduestButton.setText(R.string.unfrined);
                                                                         mDeclineButton.setVisibility(View.INVISIBLE);
                                                                         mDeclineButton.setEnabled(false);
                                                                     }
@@ -214,7 +214,7 @@ public class ProfilesActivity extends AppCompatActivity {
                                   if (task.isSuccessful()){
                                       mReduestButton.setEnabled(true);
                                       mCurrentState="not_friends";
-                                      mReduestButton.setText("Send Friend Request");
+                                      mReduestButton.setText(R.string.send_request);
                                   }
                               }
                           });
@@ -254,10 +254,10 @@ public class ProfilesActivity extends AppCompatActivity {
                                    Log.d("TAG", req_type);
                                    if (req_type.equals("send")) {
                                        mCurrentState = "request_send";
-                                       mReduestButton.setText("Cancel Friend Request");
+                                       mReduestButton.setText(getResources().getString(R.string.cancle_request));
                                    } else if (req_type.equals("receiver")) {
                                        mCurrentState = "request_received";
-                                       mReduestButton.setText("Accept Friend Request");
+                                       mReduestButton.setText(getResources().getString(R.string.accept_request));
 
                                        //make decline button visible
                                        mDeclineButton.setVisibility(View.VISIBLE);
@@ -281,7 +281,7 @@ public class ProfilesActivity extends AppCompatActivity {
 
                                                    if (dataSnapshot.hasChild(mReciver_Id)){
                                                        mCurrentState="friends";
-                                                       mReduestButton.setText("UnFriend");
+                                                       mReduestButton.setText(getResources().getString(R.string.unfrined));
                                                    }
                                                }
 
@@ -323,7 +323,7 @@ public class ProfilesActivity extends AppCompatActivity {
                                     if (task.isSuccessful()){
                                         mReduestButton.setEnabled(true);
                                         mCurrentState="not_friends";
-                                        mReduestButton.setText("Send Friend Request");
+                                        mReduestButton.setText(getResources().getString(R.string.send_request));
                                         mDeclineButton.setVisibility(View.INVISIBLE);
                                         mDeclineButton.setEnabled(false);
                                     }
@@ -370,7 +370,7 @@ public class ProfilesActivity extends AppCompatActivity {
                                                                     //current state
                                                                     mCurrentState="request_send";
                                                                     //change button name
-                                                                    mReduestButton.setText("Cancel Friend Request");
+                                                                    mReduestButton.setText(getResources().getString(R.string.cancle_request));
                                                                 }
                                                             }
                                                         });

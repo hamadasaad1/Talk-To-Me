@@ -154,22 +154,23 @@ public class FrindsFragment extends Fragment {
                                               intentChat.putExtra(USER_ID,list_user);
                                               intentChat.putExtra("nameuser",userName);
                                               startActivity(intentChat);
-                                          }else
-                                          {
-                                              mDatabaseReference.child(list_user)
-                                                      .setValue(ServerValue.TIMESTAMP)
-                                                      .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                          @Override
-                                                          public void onSuccess(Void aVoid) {
-
-                                                              Intent intentChat=new Intent
-                                                                      (getContext(),MessagesActivity.class);
-                                                              intentChat.putExtra(USER_ID,list_user);
-                                                              intentChat.putExtra("nameuser",userName);
-                                                              startActivity(intentChat);
-                                                          }
-                                                      });
                                           }
+//                                          else
+//                                          {
+//                                              mDatabaseReference.child(list_user)
+//                                                      .setValue(ServerValue.TIMESTAMP)
+//                                                      .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                                          @Override
+//                                                          public void onSuccess(Void aVoid) {
+//
+//                                                              Intent intentChat=new Intent
+//                                                                      (getContext(),MessagesActivity.class);
+//                                                              intentChat.putExtra(USER_ID,list_user);
+//                                                              intentChat.putExtra("nameuser",userName);
+//                                                              startActivity(intentChat);
+//                                                          }
+//                                                      });
+//                                          }
                                         }
 
                                     }

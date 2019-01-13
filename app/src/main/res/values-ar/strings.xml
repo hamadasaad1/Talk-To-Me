@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="log_out" translatable="false">خروج</string>
+    <string name="change_setting">الضبط</string>
+    <string name="all_user">المستخدمين</string>
+    <string name="dialog_action_internet">الاتصال بالانترنت</string>
+    <string name="dialog_titile_internet" translatable="false">"لا يوجد اتصال "</string>
+    <string name="dialog_message_internet" translatable="false">"التحقق من الاتصال "</string>
+    <string name="send_request">ارسال طلب صداقه</string>
+    <string name="cancle_request">الغاء طلب الصداقه</string>
+    <string name="unfrined">الغاء الصداقه</string>
+    <string name="accept_request">قبول طلب الصداقه</string>
+</resources>

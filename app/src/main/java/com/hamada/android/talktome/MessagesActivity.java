@@ -43,7 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessagesActivity extends AppCompatActivity {
     public static String TAG=MessagesActivity.class.getSimpleName();
-    private String mUser_id;
+    private String mChat_id;
     private DatabaseReference mReference;
     @BindView(R.id.message_toolbar)
     Toolbar mToolbar;
@@ -59,7 +59,7 @@ public class MessagesActivity extends AppCompatActivity {
     @BindView(R.id.chat_message_view)
     EditText mEditText;
     private FirebaseAuth mAuth;
-    private String mMassegeSender_Id;
+    private String mCurrent_Id;
 
     @BindView(R.id.recycler_messages_list)
     RecyclerView mRecyclerView;
@@ -83,13 +83,13 @@ public class MessagesActivity extends AppCompatActivity {
 
         mReference=FirebaseDatabase.getInstance().getReference();
 
-        mUser_id=getIntent().getExtras()
+        mChat_id =getIntent().getExtras()
                 .get(UsersActivity.USER_ID).toString();
 
          mReference.keepSynced(true);
 
          mAuth=FirebaseAuth.getInstance();
-         mMassegeSender_Id=mAuth.getCurrentUser().getUid();
+         mCurrent_Id =mAuth.getCurrentUser().getUid();
 
         String name=getIntent().getExtras().get("nameuser").toString();
         //set recyclerView
@@ -101,17 +101,22 @@ public class MessagesActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mMessagesAdapterter);
         FetchMessages();
 
-        LayoutInflater inflater= (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater= (LayoutInflater)
+                this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View action_bar=inflater.inflate(R.layout.chat_custom_layout,null);
         actionBar.setCustomView(action_bar);
+
+        //to make seen for message
+        mReference.child("Chat").child(mCurrent_Id).child(mChat_id)
+                .child("seen").setValue(true);
 
         //
         tv_nameUser=findViewById(R.id.text_view_title);
         tv_list_seen=findViewById(R.id.tv_cust_list_seen);
         circleImageView=findViewById(R.id.custom_image_bar);
          tv_nameUser.setText(name);
-        mReference.child("users").child(mUser_id).addValueEventListener(new ValueEventListener() {
+        mReference.child("users").child(mChat_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -156,6 +161,38 @@ public class MessagesActivity extends AppCompatActivity {
             }
         });
 
+        mReference.child("Chat").child(mCurrent_Id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (!dataSnapshot.hasChild(mChat_id)){
+                    Map chatAddMap = new HashMap();
+                    chatAddMap.put("seen", false);
+                    chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
+
+                    Map chatUserMap = new HashMap();
+                    chatUserMap.put("Chat/" + mCurrent_Id + "/" + mChat_id, chatAddMap);
+                    chatUserMap.put("Chat/" + mChat_id + "/" + mCurrent_Id, chatAddMap);
+
+                    mReference.updateChildren(chatUserMap, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+
+                            if (databaseError != null) {
+
+                                Log.d(TAG, databaseError.getMessage().toString());
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+
+            }
+        });
 
         //make click to send message
         mSendImageButton.setOnClickListener(new View.OnClickListener() {
@@ -165,10 +202,12 @@ public class MessagesActivity extends AppCompatActivity {
                 sendMessage();
             }
         });
+
+
     }
 
     private void FetchMessages() {
-        mReference.child("Messages").child(mMassegeSender_Id).child(mUser_id)
+        mReference.child("Messages").child(mCurrent_Id).child(mChat_id)
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -201,6 +240,7 @@ public class MessagesActivity extends AppCompatActivity {
                 });
     }
 
+
     private void sendMessage(){
         //get vale from edit text
         final String getMessage=mEditText.getText().toString();
@@ -209,12 +249,12 @@ public class MessagesActivity extends AppCompatActivity {
 
         }else {
             //root to sender
-            String message_sender_ref="Messages/"+mMassegeSender_Id+"/"+mUser_id;
+            String message_sender_ref="Messages/"+ mCurrent_Id +"/"+ mChat_id;
             //root to receiver
-            String message_receiver_ref="Messages/"+mUser_id+"/"+mMassegeSender_Id;
+            String message_receiver_ref="Messages/"+ mChat_id +"/"+ mCurrent_Id;
 
-            DatabaseReference user_message_key=mReference.child("messages").child(mMassegeSender_Id)
-                    .child(mUser_id).push();
+            DatabaseReference user_message_key=mReference.child("messages").child(mCurrent_Id)
+                    .child(mChat_id).push();
             String message_push_key=user_message_key.getKey();
 
             Map messageBody=new HashMap();
@@ -223,6 +263,7 @@ public class MessagesActivity extends AppCompatActivity {
             messageBody.put("seen",false);
             messageBody.put("type","text");
             messageBody.put("time",ServerValue.TIMESTAMP);
+            messageBody.put("from", mCurrent_Id);
 
             Map messageDetailsBody=new HashMap();
 

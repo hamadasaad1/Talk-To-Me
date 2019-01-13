@@ -1,19 +1,23 @@
 <resources>
-    <string name="app_name">Talk To Me</string>
+    <string name="app_name" translatable="false">Talk To Me</string>
     <string name="log_out">Logout</string>
     <string name="change_setting">Setting</string>
     <string name="all_user">All User</string>
-    <string name="email_hint">Enter Your Email</string>
-    <string name="password_hint">Enter Your Password</string>
-    <string name="name_hint">Enter Your Name</string>
+    <string name="email_hint" translatable="false">Enter Your Email</string>
+    <string name="password_hint" translatable="false">Enter Your Password</string>
+    <string name="name_hint" translatable="false">Enter Your Name</string>
 
 
-    <string name="dialog_action_ok">Ok</string>
-    <string name="dialog_action_cancel">Cancel</string>
+    <string name="dialog_action_ok" translatable="false">Ok</string>
+    <string name="dialog_action_cancel" translatable="false">Cancel</string>
     <string name="dialog_titile_internet"> NO INTERNET</string>
     <string name="dialog_message_internet">Please Check Your Internet Connection.</string>
     <string name="dialog_action_internet">Enable INTERNET</string>
 
+    <string name="send_request">Send Friend Request</string>
+    <string name="cancle_request">Cancel Friend Request</string>
+    <string name="unfrined">UnFriend User</string>
+    <string name="accept_request">Accept Friend Request</string>
     <!--  Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>

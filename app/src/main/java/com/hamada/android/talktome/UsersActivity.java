@@ -55,6 +55,7 @@ public class UsersActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mReference=FirebaseDatabase.getInstance().getReference().child("users");
+
          mReference.keepSynced(true);
 
 
