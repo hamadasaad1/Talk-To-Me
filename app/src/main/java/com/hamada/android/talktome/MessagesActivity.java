@@ -1,6 +1,9 @@
 package com.hamada.android.talktome;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -16,7 +19,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +32,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.hamada.android.talktome.Adapter.MessagesAdapter;
 import com.hamada.android.talktome.Model.LastSeenTime;
 import com.hamada.android.talktome.Model.Messages;
@@ -66,6 +76,8 @@ public class MessagesActivity extends AppCompatActivity {
     private MessagesAdapter mMessagesAdapterter;
     private List<Messages>  mMessagesList=new ArrayList<>();
     private LinearLayoutManager manager;
+    final int ACTIVITY_SELECT_IMAGE = 1234;
+    private StorageReference mImageStorage;
 
 
     @Override
@@ -111,6 +123,7 @@ public class MessagesActivity extends AppCompatActivity {
         mReference.child("Chat").child(mCurrent_Id).child(mChat_id)
                 .child("seen").setValue(true);
 
+        mImageStorage=FirebaseStorage.getInstance().getReference().child("Messages_pictures");
         //
         tv_nameUser=findViewById(R.id.text_view_title);
         tv_list_seen=findViewById(R.id.tv_cust_list_seen);
@@ -204,6 +217,80 @@ public class MessagesActivity extends AppCompatActivity {
         });
 
 
+        //for send image
+        mAddImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent i = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+
+                startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==ACTIVITY_SELECT_IMAGE &&resultCode == RESULT_OK&&data !=null) {
+            Uri imageUri=data.getData();
+            //root to sender
+            final String message_sender_ref="Messages/"+ mCurrent_Id +"/"+ mChat_id;
+            //root to receiver
+            final String message_receiver_ref="Messages/"+ mChat_id +"/"+ mCurrent_Id;
+
+            DatabaseReference user_message_key=mReference.child("messages").child(mCurrent_Id)
+                    .child(mChat_id).push();
+            final String message_push_key=user_message_key.getKey();
+
+            final StorageReference filePath=mImageStorage.child(message_push_key+".jpg");
+
+            filePath.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                    if (task.isSuccessful()){
+                        //to dwonload url for image and save in database
+                       filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                           @Override
+                           public void onSuccess(Uri uri) {
+
+                               final String dwonloadURL=uri.toString();
+
+
+                               Map messageBody=new HashMap();
+
+                               messageBody.put("message",dwonloadURL);
+                               messageBody.put("seen",false);
+                               messageBody.put("type","image");
+                               messageBody.put("time",ServerValue.TIMESTAMP);
+                               messageBody.put("from", mCurrent_Id);
+
+                               Map messageDetailsBody=new HashMap();
+
+                               messageDetailsBody.put(message_sender_ref+"/"+message_push_key,messageBody);
+
+                               messageDetailsBody.put(message_receiver_ref+"/"+message_push_key,messageBody);
+
+                               mReference.updateChildren(messageDetailsBody, new DatabaseReference.CompletionListener() {
+                                   @Override
+                                   public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+
+                                       if(databaseError != null) {
+
+                                           Log.d(TAG, databaseError.getMessage().toString());
+                                       }
+                                   }
+                               });
+                           }
+                       });
+                    }
+                }
+            });
+
+        }
     }
 
     private void FetchMessages() {
@@ -271,6 +358,19 @@ public class MessagesActivity extends AppCompatActivity {
 
             messageDetailsBody.put(message_receiver_ref+"/"+message_push_key,messageBody);
 
+            mEditText.setText("");
+
+            mReference.child("Chat").child(mCurrent_Id).child(mChat_id)
+                    .child("seen").setValue(true);
+            mReference.child("Chat").child(mCurrent_Id).child(mChat_id)
+                    .child("timestamp").setValue(ServerValue.TIMESTAMP);
+
+            mReference.child("Chat").child(mChat_id).child(mCurrent_Id)
+                    .child("seen").setValue(false);
+
+            mReference.child("Chat").child(mChat_id).child(mCurrent_Id)
+                    .child("timestamp").setValue(ServerValue.TIMESTAMP);
+
             mReference.updateChildren(messageDetailsBody, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
@@ -278,7 +378,7 @@ public class MessagesActivity extends AppCompatActivity {
                     if (databaseError !=null){
                         Log.d(TAG,databaseError.getMessage().toString());
                     }
-                    mEditText.setText("");
+
                 }
             });
 

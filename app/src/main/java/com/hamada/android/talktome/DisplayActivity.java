@@ -55,13 +55,12 @@ public class DisplayActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-//                    String name = ds.child("user_name").getValue(String.class);
-//                    String image=ds.child("user_image").getValue(String.class);
+                    String name = ds.child("user_name").getValue(String.class);
+                    String image=ds.child("user_image").getValue(String.class);
                     Users user=ds.getValue(Users.class);
                    // Log.d("TAG", name);
-                    String key=usersdRef.getKey();
 
-                    Log.d("TAGK",key);
+
 
 
 

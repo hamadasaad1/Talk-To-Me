@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -190,6 +191,7 @@ public class ChatFragment extends Fragment {
         };
 
         adapter.startListening();
+
         mRecyclerView.setAdapter(adapter);
     }
 

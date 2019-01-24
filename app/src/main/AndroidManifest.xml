@@ -53,8 +53,23 @@
             android:label="Profile"
             android:parentActivityName=".UsersActivity" />
         <activity android:name=".DisplayActivity" />
-        <activity android:name=".MessagesActivity"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".MessagesActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <receiver android:name=".Widget.TalkWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/talk_widget_provider_info" />
+        </receiver>
+
+        <service android:name=".Widget.TalkServiceWidget"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
     </application>
 
 </manifest>
