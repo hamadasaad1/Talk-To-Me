@@ -11,4 +11,21 @@
     <string name="cancle_request">الغاء طلب الصداقه</string>
     <string name="unfrined">الغاء الصداقه</string>
     <string name="accept_request">قبول طلب الصداقه</string>
+    <string name="bt_login">التسجيل</string>
+    <string name="bt_create_new_account">انشاء مستخدم جديد</string>
+    <string name="et_enter_message">اضغط للكتابه</string>
+    <string name="bt_decline_friend_request">الغاء طلب الصداقه</string>
+    <string name="tv_list_seen">اخر ظهور</string>
+    <string name="bt_accept">"قبول "</string>
+    <string name="bt_cancel">"رفض "</string>
+    <string name="bt_register_now">"التسجيل الان "</string>
+    <string name="bt_change_image">تغيير الصوره</string>
+    <string name="bt_change_state">تغيير الحاله</string>
+    <string name="just_now">الان</string>
+    <string name="a_minute_ago">منذ دقيقه</string>
+    <string name="minutes_ago">منذ دقائق</string>
+    <string name="an_hour_ago">منذ ساعه</string>
+    <string name="hours_ago">ساعات</string>
+    <string name="yesterday">بالامس</string>
+    <string name="days_ago">منذ ايام</string>
 </resources>

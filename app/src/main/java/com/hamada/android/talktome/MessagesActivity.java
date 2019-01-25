@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -78,7 +80,14 @@ public class MessagesActivity extends AppCompatActivity {
     private LinearLayoutManager manager;
     final int ACTIVITY_SELECT_IMAGE = 1234;
     private StorageReference mImageStorage;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout  mRefreshLayout;
+    private static final int TOTAL_ITEMS_TO_LOAD = 10;
+    private int mCurrentPage = 1;
+    private int itemPos = 0;
 
+    private String mLastKey = "";
+    private String mPrevKey = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,6 +238,20 @@ public class MessagesActivity extends AppCompatActivity {
                 startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
             }
         });
+
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                mCurrentPage++;
+
+                itemPos = 0;
+
+             FetchMessages();
+
+            }
+        });
+
     }
 
     @Override
@@ -293,16 +316,33 @@ public class MessagesActivity extends AppCompatActivity {
         }
     }
 
+
     private void FetchMessages() {
-        mReference.child("Messages").child(mCurrent_Id).child(mChat_id)
-                .addChildEventListener(new ChildEventListener() {
+        DatabaseReference messageRef = mReference.child("Messages").child(mCurrent_Id).child(mChat_id);
+
+        Query messageQuery = messageRef.limitToLast(mCurrentPage * TOTAL_ITEMS_TO_LOAD);
+
+                messageQuery.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                         Messages messages=dataSnapshot.getValue(Messages.class);
 
+                        itemPos++;
+
+                        if(itemPos == 1){
+
+                            String messageKey = dataSnapshot.getKey();
+
+                            mLastKey = messageKey;
+                            mPrevKey = messageKey;
+
+                        }
+
                         mMessagesList.add(messages);
                         mMessagesAdapterter.notifyDataSetChanged();
+                        mRecyclerView.scrollToPosition(mMessagesList.size()-1);
+                        mRefreshLayout.setRefreshing(false);
                     }
 
                     @Override

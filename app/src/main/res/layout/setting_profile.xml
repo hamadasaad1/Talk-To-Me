@@ -71,7 +71,7 @@
         android:onClick="changeProfileImage"
         android:paddingLeft="70dp"
         android:paddingRight="70dp"
-        android:text="Change Image"
+        android:text="@string/bt_change_image"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/bt_Change_State"
         app:layout_constraintStart_toStartOf="@+id/bt_Change_State" />
@@ -86,7 +86,7 @@
         android:onClick="changeState"
         android:paddingLeft="70dp"
         android:paddingRight="70dp"
-        android:text="Change State"
+        android:text="@string/bt_change_state"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

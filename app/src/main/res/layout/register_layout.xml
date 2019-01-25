@@ -85,7 +85,7 @@
             android:fontFamily="sans-serif-medium"
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
-            android:text="Register Now"
+            android:text="@string/bt_register_now"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="22sp"

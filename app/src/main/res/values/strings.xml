@@ -22,4 +22,24 @@
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="bt_login">Login</string>
+    <string name="bt_create_new_account">Create New Account</string>
+    <string name="et_enter_message">Enter Message...</string>
+    <string name="bt_decline_friend_request">Decline Friend Request</string>
+    <string name="tv_list_seen">List seen</string>
+    <string name="bt_accept">Accept</string>
+    <string name="bt_cancel">Cancel</string>
+    <string name="bt_register_now">Register Now</string>
+    <string name="bt_change_image">Change Image</string>
+    <string name="bt_change_state">Change State</string>
+
+    //custom list seen class string
+    <string name="just_now">just now</string>
+    <string name="a_minute_ago">a minute ago</string>
+    <string name="minutes_ago">minutes ago</string>
+    <string name="an_hour_ago">an hour ago</string>
+    <string name="hours_ago">hours ago</string>
+    <string name="yesterday">yesterday</string>
+    <string name="days_ago">days ago</string>
+
 </resources>

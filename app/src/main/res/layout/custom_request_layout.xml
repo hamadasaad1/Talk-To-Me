@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="Accept"
+                    android:text="@string/bt_accept"
                     android:padding="10dp"
 
                     android:background="@drawable/bt_bg_request"
@@ -48,7 +48,7 @@
                     android:id="@+id/bt_cancel_request"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel"
+                    android:text="@string/bt_cancel"
                     android:padding="10dp"
                     android:background="@drawable/bt_bg_cancel_request"
                     android:layout_marginLeft="20dp"

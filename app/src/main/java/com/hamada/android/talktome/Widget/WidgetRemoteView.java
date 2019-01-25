@@ -61,26 +61,6 @@ public class WidgetRemoteView implements RemoteViewsService.RemoteViewsFactory {
                 }
             });
 
-//            mReference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                    for (DataSnapshot dp:dataSnapshot.getChildren()){
-////                        Users users=new Users();
-////
-////                        users.setUser_name(dp.child("user_name").getValue(Users.class).toString());
-////                        Log.d(TAG,users.getUser_name());
-//                        Users user=dp.getValue(Users.class);
-//                        mListUser.add(user);
-//
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
 
         }catch (NullPointerException e)
         {

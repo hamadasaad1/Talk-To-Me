@@ -64,7 +64,7 @@
         android:fontFamily="sans-serif-medium"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:text="send friend Request"
+        android:text="@string/send_request"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/bt_decline"
         app:layout_constraintStart_toStartOf="@+id/bt_decline" />
@@ -78,7 +78,7 @@
         android:fontFamily="sans-serif-medium"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:text="Decline Friend Request"
+        android:text="@string/bt_decline_friend_request"
         android:textColor="@color/white"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
