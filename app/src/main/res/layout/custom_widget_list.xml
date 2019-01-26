@@ -3,13 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
     <TextView
         android:id="@+id/widget_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="user name"
         android:layout_margin="5dp"
+        android:textColor="@color/colorAccent"
         android:padding="5dp"
         android:textSize="18sp"
         />
