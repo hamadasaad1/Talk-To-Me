@@ -7,6 +7,9 @@ android {
     signingConfigs {
         config {
             storeFile file('/home/hamada/Downloads/TalkToMe/Keystore.jks')
+            keyAlias 'androidrelasekey'
+            keyPassword 'android'
+            storePassword 'android'
         }
     }
     compileSdkVersion 27

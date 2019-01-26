@@ -48,10 +48,11 @@ public class WidgetRemoteView implements RemoteViewsService.RemoteViewsFactory {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot dp:dataSnapshot.getChildren()){
-                        Users u=new Users();
-                        u.setUser_name(dp.child("user_name").getValue().toString());
-                        Log.d(TAG,u.getUser_name());
-                        mListUser.add(u);
+//                        Users u=new Users();
+//                        u.setUser_name(dp.child("user_name").getValue().toString());
+//                        Log.d(TAG,u.getUser_name());
+                        Users users=dp.getValue(Users.class);
+                        mListUser.add(users);
                     }
                 }
 
@@ -69,38 +70,38 @@ public class WidgetRemoteView implements RemoteViewsService.RemoteViewsFactory {
         }
     }
 
-    private void displayData(){
-        mListUser.clear();
-        mAuth=FirebaseAuth.getInstance();
-        user=mAuth.getCurrentUser();
-        userId=mAuth.getCurrentUser().getUid();
-
-        if (user !=null){
-            mReference=FirebaseDatabase.getInstance().getReference();
-            final DatabaseReference usersdRef = mReference.child("users");
-            ValueEventListener eventListener=new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                        String name = ds.child("user_name").getValue(String.class);
-                        String image = ds.child("user_image").getValue(String.class);
-                        Users user = ds.getValue(Users.class);
-                        Log.d("TAG", name);
-
-                        mListUser.add(user);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            };
-            usersdRef.addValueEventListener(eventListener);
-        }
-    }
+//    private void displayData(){
+//        mListUser.clear();
+//        mAuth=FirebaseAuth.getInstance();
+//        user=mAuth.getCurrentUser();
+//        userId=mAuth.getCurrentUser().getUid();
+//
+//        if (user !=null){
+//            mReference=FirebaseDatabase.getInstance().getReference();
+//            final DatabaseReference usersdRef = mReference.child("users");
+//            ValueEventListener eventListener=new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//
+//                        String name = ds.child("user_name").getValue(String.class);
+//                        String image = ds.child("user_image").getValue(String.class);
+//                        Users user = ds.getValue(Users.class);
+//                        Log.d("TAG", name);
+//
+//                        //mListUser.add(user);
+//                    }
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            };
+//            usersdRef.addValueEventListener(eventListener);
+//        }
+//    }
 
 
     public WidgetRemoteView(Context context, Intent intent) {

@@ -181,7 +181,7 @@ public class RequestsFragment extends Fragment {
                                     }
                                 });
 
-                                holder.acceptButton.setText("Cancel Request");
+                                holder.acceptButton.setText(getResources().getString(R.string.bt_cancel));
                                 holder.acceptButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
