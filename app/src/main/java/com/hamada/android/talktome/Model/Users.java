@@ -1,6 +1,9 @@
 package com.hamada.android.talktome.Model;
 
-public class Users {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Users implements Parcelable {
 
     public String user_name,user_image,user_thumb_image;
     private String user_state;
@@ -16,6 +19,38 @@ public class Users {
         this.user_thumb_image=user_thumb_image;
         this.user_state=user_state;
     }
+
+    protected Users(Parcel in) {
+        user_name = in.readString();
+        user_image = in.readString();
+        user_thumb_image = in.readString();
+        user_state = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(user_name);
+        dest.writeString(user_image);
+        dest.writeString(user_thumb_image);
+        dest.writeString(user_state);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Users> CREATOR = new Creator<Users>() {
+        @Override
+        public Users createFromParcel(Parcel in) {
+            return new Users(in);
+        }
+
+        @Override
+        public Users[] newArray(int size) {
+            return new Users[size];
+        }
+    };
 
     public String getUser_state() {
         return user_state;

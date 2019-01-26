@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#09C"
     android:padding="@dimen/widget_margin"
     android:orientation="vertical">
@@ -14,13 +15,24 @@
         android:gravity="center"
         android:textColor="@color/colorAccent"
         android:textSize="20sp" />
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/widget_layout_height"
+        android:layout_weight="1"
+        android:background="@color/white">
     <ListView
         android:id="@+id/talk_widget_listview"
+        tools:listitem="@layout/custom_widget_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:divider="@android:color/white"
-        android:dividerHeight="1dp" />
+        android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/empty_widget_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/empty_widget_textSize"
+            android:visibility="gone" />
+    </FrameLayout>
 </LinearLayout>
